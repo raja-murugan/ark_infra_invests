@@ -24,7 +24,7 @@
     <script src="{{ asset('assets/backend/js/chart/apex-chart/moment.min.js') }}"></script>
     <script src="{{ asset('assets/backend/js/notify/bootstrap-notify.min.js') }}"></script>
     <script src="{{ asset('assets/backend/js/dashboard/default.js') }}"></script>
-    <script src="{{ asset('assets/backend/js/notify/index.js') }}"></script>
+    {{-- <script src="{{ asset('assets/backend/js/notify/index.js') }}"></script> --}}
     <script src="{{ asset('assets/backend/js/typeahead/handlebars.js') }}"></script>
     <script src="{{ asset('assets/backend/js/typeahead/typeahead.bundle.js') }}"></script>
     <script src="{{ asset('assets/backend/js/typeahead/typeahead.custom.js') }}"></script>
@@ -233,9 +233,9 @@
                 });
 
 
-      
 
-       
+
+
         $('#booking_block' + 4).on('change', function() {
             var booking_block = this.value;
             $('#square_feet' + 4).val('');
@@ -297,9 +297,9 @@
 
 
 
-      
 
-       
+
+
                 $('.payment_block').on('change', function() {
                 var booking_block = this.value;
                     $.ajax({
@@ -354,7 +354,7 @@
                         success: function(response) {
                             console.log(response);
                             if (response.status !== 'false') {
-                                
+
                                 $(".payment_div").show();
 
                                 var len = response.length;
@@ -374,7 +374,7 @@
                                         $('#bookingoldplot_fields').html('');
                                         var paid_terms = response[i].paid_terms.length;
                                         for (var j = 0; j < paid_terms; j++) {
-                                            
+
                                             var column_0 = $('<td/>', {
                                                 html: '<input type="text" class="form-control" style="background: #f4f4f4;" readonly value="' + response[i].paid_terms[j].bill_no +'"/>' ,
                                             });
@@ -400,7 +400,7 @@
                                         }else {
                                             $(".booking_new").hide();
                                         }
-                                        
+
                                     }
                                 }
                             }else {

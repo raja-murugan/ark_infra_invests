@@ -38,7 +38,7 @@
                 <li class="profile-nav onhover-dropdown pe-0 py-0">
                     <div class="media profile-media"><img class="b-r-10"
                             src="{{ asset('assets/backend/images/dashboard/profile.png') }}" alt="">
-                        <div class="media-body"><span>Iraivan Nagar</span>
+                        <div class="media-body"><span>{{ auth()->user()->name }}</span>
                             <p class="mb-0">Admin <i class="middle fa fa-angle-down"></i></p>
                         </div>
                     </div>
