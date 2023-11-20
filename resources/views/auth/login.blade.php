@@ -6,7 +6,7 @@
             <div class="col-12 p-0">
                 <div class="login-card login-dark">
                     <div>
-                        <div><a class="logo" href="{{ route('welcome') }}"><img class="img-fluid for-light"
+                        <div><a class="logo" href="#"><img class="img-fluid for-light"
                                     src="{{ asset('assets/backend/images/logo/logo.png') }}" alt="looginpage"><img class="img-fluid for-dark"
                                     src="{{ asset('assets/backend/images/logo/logo_dark.png') }}" alt="looginpage"></a></div>
                         <div class="login-main">

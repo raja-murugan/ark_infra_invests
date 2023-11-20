@@ -6,7 +6,7 @@
             <div class="col-12 p-0">
                 <div class="login-card login-dark">
                     <div>
-                        <div><a class="logo" href="{{ route('welcome') }}"><img class="img-fluid for-light"
+                        <div><a class="logo" href="#"><img class="img-fluid for-light"
                                     src="{{ asset('assets/backend/images/logo/logo.png') }}" alt="looginpage"><img
                                     class="img-fluid for-dark" src="{{ asset('assets/backend/images/logo/logo_dark.png') }}"
                                     alt="looginpage"></a></div>
@@ -46,7 +46,7 @@
                                         <input id="password" type="password"
                                             class="form-control @error('password') is-invalid @enderror" name="password"
                                             required autocomplete="new-password" placeholder="*********">
-                                            <div class="show-hide"><span class="show"></span></div>
+                                            <div class="show-hide"></div>
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -60,7 +60,7 @@
                                     <div class="form-input position-relative">
                                         <input id="password-confirm" type="password" class="form-control"
                                             name="password_confirmation" required autocomplete="new-password" placeholder="*********">
-                                        <div class="show-hide"><span class="show"></span></div>
+                                        <div class="show-hide"></div>
                                     </div>
                                 </div>
                                 <div class="form-group mb-0">
