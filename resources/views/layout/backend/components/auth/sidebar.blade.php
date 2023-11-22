@@ -17,11 +17,13 @@
                         <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2"
                                 aria-hidden="true"></i></div>
                     </li>
+                    @if(Auth::user()->role == 'Super-Admin')
                     <li class="sidebar-main-title">
                         <div>
                             <h6 class="lan-1">General</h6>
                         </div>
                     </li>
+                    
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title link-nav" href="{{ route('home') }}">
                             <svg class="stroke-icon">
@@ -33,10 +35,23 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
+                    @endif
                     <li class="sidebar-main-title">
                         <div>
                             <h6 class="lan-8">Applications</h6>
                         </div>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title link-nav" href="{{ route('customer.index') }}"
+                            class="{{ Route::is('customer.index') ? 'active' : '' }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/backend/svg/icon-sprite.svg#stroke-maps') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/backend/svg/icon-sprite.svg#fill-maps') }}"></use>
+                            </svg>
+                            <span>Customer</span>
+                        </a>
                     </li>
                     
                 </ul>

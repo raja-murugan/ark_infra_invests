@@ -8810,7 +8810,7 @@ btn-group .dropdown-wrapper .input-group .input-group-text {
   color: #FC4438 !important;
 }
 .custom-input .form-check .form-check-input:valid {
-  border-color: #54BA4A;
+  border-color: #d9e0d9;
 }
 .custom-input .form-check .form-check-input:invalid {
   border-color: #FC4438;
@@ -8819,10 +8819,10 @@ btn-group .dropdown-wrapper .input-group .input-group-text {
   color: #FC4438;
 }
 .custom-input .form-check .form-check-input:valid ~ .form-check-label {
-  color: #54BA4A;
+  color: #fc4438;
 }
 .custom-input .form-check .form-check-input:checked {
-  background-color: #54BA4A;
+  background-color: #42e73294;
 }
 .custom-input .form-check .invalid-feedback {
   color: #FC4438;

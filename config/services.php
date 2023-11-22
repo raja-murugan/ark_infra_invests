@@ -40,4 +40,9 @@ return [
         'industry_type' => env('PAYTM_INDUSTRY_TYPE'),
     ],
 
+    'razorpay' => [
+        'razorpay_key' => env('RAZORPAY_KEY'),
+        'razorpay_secret' => env('RAZORPAY_SECRET'),
+    ]
+
 ];

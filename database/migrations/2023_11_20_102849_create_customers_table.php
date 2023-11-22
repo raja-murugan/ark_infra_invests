@@ -22,7 +22,13 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('address');
             $table->string('plan');
+            $table->string('mobile_number');
+            $table->string('alternate_mobileno')->nullable();
             $table->boolean('status')->default(0);
+            $table->unsignedBigInteger('userid');
+            $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
+            $table->string('total_month');
+            $table->string('pending_month')->nullable();
             $table->timestamps();
         });
     }

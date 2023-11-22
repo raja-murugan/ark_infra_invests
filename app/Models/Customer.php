@@ -17,6 +17,11 @@ class Customer extends Model
         'phone_number',
         'address',
         'plan',
-        'status'
+        'status',
+        'mobile_number',
+        'alternate_mobileno',
+        'userid',
+        'total_month',
+        'pending_month'
     ];
 }
