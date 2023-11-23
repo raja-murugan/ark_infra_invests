@@ -36,7 +36,7 @@ class CustomerController extends Controller
 
 
             $Orderdata = Order::where('customer_id', '=', Auth::user()->customer_id)->orderBy('id', 'DESC')->get();
-            
+
 
             // $novfrom_date = 2023-11-15;
             // $novto_date = 2023-11-30;
@@ -53,7 +53,7 @@ class CustomerController extends Controller
 
             // $marfrom_date = 2024-03-15;
             // $marto_date = 2024-03-31;
-            
+
             // $aprfrom_date = 2024-04-15;
             // $aprto_date = 2024-04-30;
 
@@ -158,8 +158,8 @@ class CustomerController extends Controller
     }
 
 
-   // private $razorpayId = "rzp_test_Pkkbzx5Jv2PbXn";
-   // private $razorpaykey = "hXmr6R0g461B3qMnn37kyDg7";
+   private $razorpayId = "rzp_test_uQisxeWvx6ZHvB";
+   private $razorpaykey = "kxXcr3MVFrxC2259eKPjlGKO";
 
 
     public function payment_request(Request $request)
@@ -171,7 +171,7 @@ class CustomerController extends Controller
             $razorpaykey = config('services.razorpay.razorpay_secret');
 
             $api = new Api($razorpayId, $razorpaykey);
-            
+
             //  In Razorpay you have to convert rupees into paise we multiply by 100
             // Currency will be INR
             // Creating Order
@@ -205,8 +205,8 @@ class CustomerController extends Controller
                 'razorpay_order_id' => $order['id'],
                 'amount' => $request->all()['planamount'],
             ]);
-        
-    
+
+
         //dd($order);
         return view('pages.backend.customer.razorpay_paymentpage', compact('response'));
     }
@@ -244,7 +244,7 @@ class CustomerController extends Controller
             $customer->pending_month = $pending_month;
             $customer->update();
 
-          
+
 
             return redirect()->route('customer.index')->with('message', 'Payment Successfull !');
 
@@ -253,7 +253,7 @@ class CustomerController extends Controller
             return redirect()->route('customer.index')->with('message', 'Payment Failed !');
         }
 
-        
+
 
 
 
@@ -276,7 +276,7 @@ class CustomerController extends Controller
 
     public function update(Request $request, $id)
     {
-       
+
 
         $CustomerData = Customer::findOrFail($id);
         $CustomerData->phone_number = $request->get('phone_number');
@@ -286,7 +286,7 @@ class CustomerController extends Controller
 
         $CustomerData->update();
 
-      
+
 
         return redirect()->route('customer.index')->with('info', 'Updated !');
     }
