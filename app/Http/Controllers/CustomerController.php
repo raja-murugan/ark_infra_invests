@@ -32,50 +32,39 @@ class CustomerController extends Controller
             $total_month = $customer->pending_month;
             $phoneno = $customer->phone_number;
             $status = 'OPEN';
+
             $today = Carbon::now()->format('Y-m-d');
+            $year = date("Y",strtotime($today));
+            $month = date("m",strtotime($today));
+
+            $fifteenthday = date($year-$month-15);
+            $lastday = date('t',strtotime($today));
+
+            $monthinwords = date("M",strtotime($today));
+
+            if (($today >= $fifteenthday) && ($today <= $lastday)){
+
+                $Latest_order = Order::where('customer_id', '=', Auth::user()->customer_id)->where('status', '=', 'Paid')->where('month', '=', $monthinwords)->latest('id')->first();
+                if($Latest_order != ''){
+                    $pay_button_status = 'closed';
+                }else {
+                    $pay_button_status = 'open';
+                }
+                
+            }else{
+                $pay_button_status = 'closed';
+            }
 
 
             $Orderdata = Order::where('customer_id', '=', Auth::user()->customer_id)->orderBy('id', 'DESC')->get();
+            
+            return view('pages.backend.customer.index', compact('customer', 'today', 'planamount', 'plan', 'total_month', 'status', 'phoneno', 'Orderdata', 'pay_button_status'));
 
+        }else if(Auth::user()->role == 'Super-Admin'){
 
-            // $novfrom_date = 2023-11-15;
-            // $novto_date = 2023-11-30;
+            $today = Carbon::now()->format('Y-m-d');
 
-            // $decfrom_date = 2023-12-15;
-            // $decto_date = 2023-12-31;
-
-
-            // $janfrom_date = 2024-01-15;
-            // $janto_date = 2024-01-31;
-
-            // $febfrom_date = 2024-02-15;
-            // $febto_date = 2024-02-29;
-
-            // $marfrom_date = 2024-03-15;
-            // $marto_date = 2024-03-31;
-
-            // $aprfrom_date = 2024-04-15;
-            // $aprto_date = 2024-04-30;
-
-            // $mayfrom_date = 2024-05-31;
-            // $mayto_date = 2024-05-31;
-
-            // $junfrom_date = 2024-06-15;
-            // $junto_date = 2024-06-30;
-
-            // $julyfrom_date = 2024-07-15;
-            // $julyto_date = 2024-07-31;
-
-            // $augfrom_date = 2024-8-15;
-            // $augto_date = 2024-8-31;
-
-            // $sepfrom_date = 2024-9-15;
-            // $septo_date = 2024-9-30;
-
-            // $octfrom_date = 2024-10-15;
-            // $octto_date = 2024-10-31;
-
-            return view('pages.backend.customer.index', compact('customer', 'today', 'planamount', 'plan', 'total_month', 'status', 'phoneno', 'Orderdata'));
+            return view('pages.backend.customer.index', compact('today'));
 
         }else {
 
@@ -108,114 +97,169 @@ class CustomerController extends Controller
             $status = '';
             $phoneno = '';
             $Orderdata = Order::orderBy('id', 'DESC')->get();
-            return view('pages.backend.customer.index', compact('Customer_data', 'today', 'plan', 'planamount', 'total_month', 'status', 'phoneno', 'Orderdata'));
+
+            $fifteenthday = date($year-$month-15);
+            $lastday = date('t',strtotime($today));
+
+            if (($today >= $fifteenthday) && ($today <= $lastday)){
+                $pay_button_status = 'open';
+            }else{
+                $pay_button_status = 'closed';
+            }
+            return view('pages.backend.customer.index', compact('Customer_data', 'today', 'plan', 'planamount', 'total_month', 'status', 'phoneno', 'Orderdata', 'pay_button_status'));
         }
     }
 
-    public function create()
-    {
-        $today = Carbon::now()->format('Y-m-d');
-        $timenow = Carbon::now()->format('H:i');
+   
 
-        return view('pages.backend.customer.create', compact('today', 'timenow'));
-    }
-
-
-
-    public function store(Request $request)
-    {
-        $randomkey = Str::random(5);
-
-        $data = new Customer();
-
-        $data->unique_key = $randomkey;
-        $data->name = $request->get('name');
-        $data->email = $request->get('email');
-        $data->phone_number = $request->get('phone_number');
-        $data->address = $request->get('address');
-        $data->plan = $request->get('plan');
-        $data->alternate_mobileno = $request->get('alternate_mobileno');
-        $data->userid = $request->get('userid');
-        $data->status = 1;
-        $data->total_month = 12;
-        $data->pending_month = 12;
-        $data->save();
-
-        $user = User::findOrFail($request->get('userid'));
-        $user->customer_id = $data->id;
-        $user->role = 'Admin';
-        $user->update();
-
-
-        if($request->get('plan') == 'prosper'){
-            $planamount = 1000;
-        }else if($request->get('plan') == 'jackpot'){
-            $planamount = 1500;
-        }
-
-        //return redirect()->route('customer.payment', ['customerid' => $data->id, 'planamount' => $planamount])->with('message', 'Added !');
-        return redirect()->route('customer.index')->with('message', 'Added !');
-    }
-
-
-   private $razorpayId = "rzp_test_uQisxeWvx6ZHvB";
-   private $razorpaykey = "kxXcr3MVFrxC2259eKPjlGKO";
+   // private $razorpayId = "rzp_test_Pkkbzx5Jv2PbXn";
+   // private $razorpaykey = "hXmr6R0g461B3qMnn37kyDg7";
 
 
     public function payment_request(Request $request)
     {
-        // Generate Random Receipt ID
-            $receipt_id = Str::random(20);
+        if(Auth::user()->role == '')
+        {
+            $randomkey = Str::random(5);
 
-            $razorpayId = config('services.razorpay.razorpay_key');
-            $razorpaykey = config('services.razorpay.razorpay_secret');
+            $data = new Customer();
+    
+            $data->unique_key = $randomkey;
+            $data->name = $request->get('name');
+            $data->email = $request->get('email');
+            $data->phone_number = $request->get('phone_number');
+            $data->address = $request->get('address');
+            $data->plan = $request->get('plan');
+            $data->alternate_mobileno = $request->get('alternate_mobileno');
+            $data->userid = $request->get('userid');
+            $data->status = 1;
+            $data->total_month = 12;
+            $data->pending_month = 12;
+            $data->save();
+    
+    
+            if($data->plan == 'prosper'){
+                $planamount = 1000;
+            }else if($data->plan == 'jackpot'){
+                $planamount = 1500;
+            }
+    
+            $user = User::findOrFail($request->get('userid'));
+            $user->customer_id = $data->id;
+            $user->role = 'Admin';
+            $user->update();
 
-            $api = new Api($razorpayId, $razorpaykey);
+        
 
-            //  In Razorpay you have to convert rupees into paise we multiply by 100
-            // Currency will be INR
-            // Creating Order
+           // Generate Random Receipt ID
+           $receipt_id = Str::random(20);
 
-            $order = $api->order->create(array(
-                'receipt'         => $receipt_id,
-                'amount'          => $request->all()['planamount'] * 100, // 39900 rupees in paise
-                'currency'        => 'INR'
-            ));
+           $razorpayId = config('services.razorpay.razorpay_key');
+           $razorpaykey = config('services.razorpay.razorpay_secret');
 
-            // Let's return the response
-            // Let's create the razorpay payment page
+           $api = new Api($razorpayId, $razorpaykey);
+           
+           //  In Razorpay you have to convert rupees into paise we multiply by 100
+           // Currency will be INR
+           // Creating Order
 
+           $order = $api->order->create(array(
+               'receipt'         => $receipt_id,
+               'amount'          => $planamount * 100, // 39900 rupees in paise
+               'currency'        => 'INR'
+           ));
 
-            $response = [
-                'orderId' => $order['id'],
-                'razorpayId' => $razorpayId, // Enter the Key ID generated from the Dashboard
-                'amount' => $request->all()['planamount'] * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-                'name' => $request->all()['customername'],
-                'currency' => 'INR',
-                'email' => $request->all()['customeremail'],
-                'ContactNumber' => $request->all()['customerphoneno'],
-                "description" => "Test Transaction",
-            ];
+           // Let's return the response
+           // Let's create the razorpay payment page
 
 
+           $response = [
+               'orderId' => $order['id'],
+               'razorpayId' => $razorpayId, // Enter the Key ID generated from the Dashboard
+               'amount' => $planamount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+               'name' => $data->name,
+               'currency' => 'INR',
+               'email' => $data->email,
+               'ContactNumber' => $data->phone_number,
+               "description" => "Test Transaction",
+           ];
 
-            Order::create([
-                'customer_id' => $request->all()['customer_id'],
-                'customer_name' => $request->all()['customername'],
-                'razorpay_order_id' => $order['id'],
-                'amount' => $request->all()['planamount'],
-            ]);
 
 
-        //dd($order);
-        return view('pages.backend.customer.razorpay_paymentpage', compact('response'));
+           Order::create([
+               'customer_id' => $data->id,
+               'customer_name' => $data->name,
+               'razorpay_order_id' => $order['id'],
+               'amount' => $planamount,
+           ]);
+
+
+           return view('pages.backend.customer.razorpay_paymentpage', compact('response'));
+
+        }else if(Auth::user()->role == 'Admin'){
+
+
+             // Generate Random Receipt ID
+             $receipt_id = Str::random(20);
+
+             $razorpayId = config('services.razorpay.razorpay_key');
+             $razorpaykey = config('services.razorpay.razorpay_secret');
+ 
+             $api = new Api($razorpayId, $razorpaykey);
+             
+             //  In Razorpay you have to convert rupees into paise we multiply by 100
+             // Currency will be INR
+             // Creating Order
+ 
+             $order = $api->order->create(array(
+                 'receipt'         => $receipt_id,
+                 'amount'          => $request->all()['planamount'] * 100, // 39900 rupees in paise
+                 'currency'        => 'INR'
+             ));
+ 
+             // Let's return the response
+             // Let's create the razorpay payment page
+ 
+ 
+             $response = [
+                 'orderId' => $order['id'],
+                 'razorpayId' => $razorpayId, // Enter the Key ID generated from the Dashboard
+                 'amount' => $request->all()['planamount'] * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                 'name' => $request->all()['customername'],
+                 'currency' => 'INR',
+                 'email' => $request->all()['customeremail'],
+                 'ContactNumber' => $request->all()['customerphoneno'],
+                 "description" => "Test Transaction",
+             ];
+ 
+            
+ 
+             Order::create([
+                 'customer_id' => $request->all()['customer_id'],
+                 'customer_name' => $request->all()['customername'],
+                 'razorpay_order_id' => $order['id'],
+                 'amount' => $request->all()['planamount'],
+             ]);
+
+
+             return view('pages.backend.customer.razorpay_paymentpage', compact('response'));
+         
+        }
     }
 
 
     public function paymentverify(Request $request)
     {
+
         $today = Carbon::now()->format('Y-m-d');
         $month = date("M",strtotime($today));
+
+        $Latest_order = Order::where('customer_id', '=', Auth::user()->customer_id)->where('status', '=', 'Paid')->latest('id')->first();
+        if($Latest_order != ''){
+            $installment = $Latest_order->installment + 1;
+        }else {
+            $installment = 1;
+        }
 
         $razorpayId = config('services.razorpay.razorpay_key');
         $razorpaykey = config('services.razorpay.razorpay_secret');
@@ -237,14 +281,21 @@ class CustomerController extends Controller
                 'status' => 'Paid',
                 'date' => $today,
                 'month' => $month,
+                'installment' => $installment,
             ]);
 
-            $customer = Customer::findOrFail(Auth::user()->customer_id);
-            $pending_month = $customer->pending_month - 1;
-            $customer->pending_month = $pending_month;
-            $customer->update();
 
+            if($request->input('razorpay_payment_id') != ''){
 
+                $customer = Customer::findOrFail(Auth::user()->customer_id);
+                $pending_month = $customer->pending_month - 1;
+                $customer->pending_month = $pending_month;
+                $customer->update();
+
+            }
+            
+
+          
 
             return redirect()->route('customer.index')->with('message', 'Payment Successfull !');
 
@@ -253,7 +304,7 @@ class CustomerController extends Controller
             return redirect()->route('customer.index')->with('message', 'Payment Failed !');
         }
 
-
+        
 
 
 
@@ -276,7 +327,7 @@ class CustomerController extends Controller
 
     public function update(Request $request, $id)
     {
-
+       
 
         $CustomerData = Customer::findOrFail($id);
         $CustomerData->phone_number = $request->get('phone_number');
@@ -286,8 +337,19 @@ class CustomerController extends Controller
 
         $CustomerData->update();
 
-
+      
 
         return redirect()->route('customer.index')->with('info', 'Updated !');
+    }
+
+
+
+    public function recept_print($id)
+    {
+        $OrderData = Order::findOrFail($id);
+        $today = Carbon::now()->format('Y-m-d');
+
+
+        return view('pages.backend.customer.recept_print', compact('OrderData', 'today'));
     }
 }
