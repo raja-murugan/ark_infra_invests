@@ -17,14 +17,14 @@
                         <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2"
                                 aria-hidden="true"></i></div>
                     </li>
-                   
+                    @if(Auth::user()->role == 'Super-Admin')
                     <li class="sidebar-main-title">
                         <div>
                             <h6 class="lan-1">General</h6>
                         </div>
                     </li>
                     
-                    <!-- <li class="sidebar-list">
+                    <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title link-nav" href="{{ route('home') }}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/backend/svg/icon-sprite.svg#stroke-home') }}"></use>
@@ -34,8 +34,9 @@
                             </svg>
                             <span>Dashboard</span>
                         </a>
-                    </li> -->
-                  
+                    </li>
+                    @endif
+
                     <li class="sidebar-main-title">
                         <div>
                             <h6 class="lan-8">Applications</h6>

@@ -98,6 +98,9 @@ class CustomerController extends Controller
             $phoneno = '';
             $Orderdata = Order::orderBy('id', 'DESC')->get();
 
+            $year = date("Y",strtotime($today));
+            $month = date("m",strtotime($today));
+
             $fifteenthday = date($year-$month-15);
             $lastday = date('t',strtotime($today));
 

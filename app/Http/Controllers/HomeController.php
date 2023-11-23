@@ -1,8 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
+use App\Models\Customer;
+use App\Models\User;
+use App\Models\Order;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -23,6 +29,54 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        if(Auth::user()->role == 'Admin')
+        {
+
+            $customer = Customer::findOrFail(Auth::user()->customer_id);
+            if($customer->plan == 'prosper'){
+                $planamount = 1000;
+            }else if($customer->plan == 'jackpot'){
+                $planamount = 1500;
+            }
+            $plan = $customer->plan;
+            $total_month = $customer->pending_month;
+            $phoneno = $customer->phone_number;
+            $status = 'OPEN';
+
+            $today = Carbon::now()->format('Y-m-d');
+            $year = date("Y",strtotime($today));
+            $month = date("m",strtotime($today));
+
+            $fifteenthday = date($year-$month-15);
+            $lastday = date('t',strtotime($today));
+
+            $monthinwords = date("M",strtotime($today));
+
+            if (($today >= $fifteenthday) && ($today <= $lastday)){
+
+                $Latest_order = Order::where('customer_id', '=', Auth::user()->customer_id)->where('status', '=', 'Paid')->where('month', '=', $monthinwords)->latest('id')->first();
+                if($Latest_order != ''){
+                    $pay_button_status = 'closed';
+                }else {
+                    $pay_button_status = 'open';
+                }
+                
+            }else{
+                $pay_button_status = 'closed';
+            }
+
+
+            $Orderdata = Order::where('customer_id', '=', Auth::user()->customer_id)->orderBy('id', 'DESC')->get();
+            
+            return view('pages.backend.dashboard', compact('customer', 'today', 'planamount', 'plan', 'total_month', 'status', 'phoneno', 'Orderdata', 'pay_button_status'));
+
+        }else if(Auth::user()->role == 'Super-Admin')
+        {
+            return view('home');
+        }else if(Auth::user()->role == ''){
+            return view('home');
+        }
+       
     }
 }
