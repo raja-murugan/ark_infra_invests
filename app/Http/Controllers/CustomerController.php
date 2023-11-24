@@ -50,14 +50,14 @@ class CustomerController extends Controller
                 }else {
                     $pay_button_status = 'open';
                 }
-                
+
             }else{
                 $pay_button_status = 'closed';
             }
 
 
             $Orderdata = Order::where('customer_id', '=', Auth::user()->customer_id)->orderBy('id', 'DESC')->get();
-            
+
             return view('pages.backend.customer.index', compact('customer', 'today', 'planamount', 'plan', 'total_month', 'status', 'phoneno', 'Orderdata', 'pay_button_status'));
 
         }else if(Auth::user()->role == 'Super-Admin'){
@@ -113,10 +113,10 @@ class CustomerController extends Controller
         }
     }
 
-   
 
-   // private $razorpayId = "rzp_test_Pkkbzx5Jv2PbXn";
-   // private $razorpaykey = "hXmr6R0g461B3qMnn37kyDg7";
+
+   private $razorpayId = "rzp_test_Pkkbzx5Jv2PbXn";
+   private $razorpaykey = "hXmr6R0g461B3qMnn37kyDg7";
 
 
     public function payment_request(Request $request)
@@ -126,7 +126,7 @@ class CustomerController extends Controller
             $randomkey = Str::random(5);
 
             $data = new Customer();
-    
+
             $data->unique_key = $randomkey;
             $data->name = $request->get('name');
             $data->email = $request->get('email');
@@ -139,20 +139,20 @@ class CustomerController extends Controller
             $data->total_month = 12;
             $data->pending_month = 12;
             $data->save();
-    
-    
+
+
             if($data->plan == 'prosper'){
                 $planamount = 1000;
             }else if($data->plan == 'jackpot'){
                 $planamount = 1500;
             }
-    
+
             $user = User::findOrFail($request->get('userid'));
             $user->customer_id = $data->id;
             $user->role = 'Admin';
             $user->update();
 
-        
+
 
            // Generate Random Receipt ID
            $receipt_id = Str::random(20);
@@ -161,7 +161,7 @@ class CustomerController extends Controller
            $razorpaykey = config('services.razorpay.razorpay_secret');
 
            $api = new Api($razorpayId, $razorpaykey);
-           
+
            //  In Razorpay you have to convert rupees into paise we multiply by 100
            // Currency will be INR
            // Creating Order
@@ -207,23 +207,23 @@ class CustomerController extends Controller
 
              $razorpayId = config('services.razorpay.razorpay_key');
              $razorpaykey = config('services.razorpay.razorpay_secret');
- 
+
              $api = new Api($razorpayId, $razorpaykey);
-             
+
              //  In Razorpay you have to convert rupees into paise we multiply by 100
              // Currency will be INR
              // Creating Order
- 
+
              $order = $api->order->create(array(
                  'receipt'         => $receipt_id,
                  'amount'          => $request->all()['planamount'] * 100, // 39900 rupees in paise
                  'currency'        => 'INR'
              ));
- 
+
              // Let's return the response
              // Let's create the razorpay payment page
- 
- 
+
+
              $response = [
                  'orderId' => $order['id'],
                  'razorpayId' => $razorpayId, // Enter the Key ID generated from the Dashboard
@@ -234,9 +234,9 @@ class CustomerController extends Controller
                  'ContactNumber' => $request->all()['customerphoneno'],
                  "description" => "Test Transaction",
              ];
- 
-            
- 
+
+
+
              Order::create([
                  'customer_id' => $request->all()['customer_id'],
                  'customer_name' => $request->all()['customername'],
@@ -246,7 +246,7 @@ class CustomerController extends Controller
 
 
              return view('pages.backend.customer.razorpay_paymentpage', compact('response'));
-         
+
         }
     }
 
@@ -296,9 +296,9 @@ class CustomerController extends Controller
                 $customer->update();
 
             }
-            
 
-          
+
+
 
             return redirect()->route('customer.index')->with('message', 'Payment Successfull !');
 
@@ -307,7 +307,7 @@ class CustomerController extends Controller
             return redirect()->route('customer.index')->with('message', 'Payment Failed !');
         }
 
-        
+
 
 
 
@@ -330,7 +330,7 @@ class CustomerController extends Controller
 
     public function update(Request $request, $id)
     {
-       
+
 
         $CustomerData = Customer::findOrFail($id);
         $CustomerData->phone_number = $request->get('phone_number');
@@ -340,7 +340,7 @@ class CustomerController extends Controller
 
         $CustomerData->update();
 
-      
+
 
         return redirect()->route('customer.index')->with('info', 'Updated !');
     }
