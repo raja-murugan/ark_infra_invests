@@ -300,11 +300,11 @@ class CustomerController extends Controller
 
 
 
-            return redirect()->route('customer.index')->with('message', 'Payment Successfull !');
+            return redirect()->route('home')->with('message', 'Payment Successfull !');
 
         } catch(SignatureVerificationError $e){
 
-            return redirect()->route('customer.index')->with('message', 'Payment Failed !');
+            return redirect()->route('home')->with('message', 'Payment Failed !');
         }
 
 
@@ -354,5 +354,19 @@ class CustomerController extends Controller
 
 
         return view('pages.backend.customer.recept_print', compact('OrderData', 'today'));
+    }
+
+
+
+    public function view($unique_key)
+    {
+        $Viewdata = Customer::where('unique_key', '=', $unique_key)->first();
+
+        $order_list = Order::where('customer_id', '=', $Viewdata->id)->where('status', '=', 'Paid')->get();
+
+
+
+        return view('pages.backend.customer.view', compact('Viewdata', 'order_list'));
+
     }
 }

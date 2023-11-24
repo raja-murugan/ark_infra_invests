@@ -38,6 +38,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechnology/customer/payment/{customerid}/{planamount}', [CustomerController::class, 'payment'])->name('customer.payment');
         // PRINT
         Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechnology/customer/recept_print/{id}', [CustomerController::class, 'recept_print'])->name('customer.recept_print');
+        
+        // VIEW
+        Route::middleware(['auth:sanctum', 'verified'])->get('/zworktechnology/customer/view/{unique_key}', [CustomerController::class, 'view'])->name('customer.view');
     });
 
 });

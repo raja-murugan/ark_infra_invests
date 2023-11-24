@@ -121,7 +121,7 @@
                                           <td>{{$Orderdatas->amount}}</td>
                                           <td><a class="btn btn-primary btn-xs" href="#">{{$Orderdatas->status}}</a></td>
                                           <td><a href="{{ route('customer.recept_print', ['id' => $Orderdatas->id]) }}"
-                                                                          class="btn btn-square btn-sm" style="background: #d71e4a;color: white;" >Print</a></td>
+                                                                          class="btn btn-square btn-sm" style="background: #d71e4a;color: white;" >PRINT</a></td>
                                       </tr>
                                       @endif
                                       @endforeach

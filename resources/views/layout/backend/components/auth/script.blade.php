@@ -35,6 +35,26 @@
 
     <script src="{{ asset('assets/backend/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/backend/js/datatable/datatables/datatable.custom.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/datatable-extension/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/datatable/datatable-extension/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/datatable/datatable-extension/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/datatable/datatable-extension/dataTables.scroller.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/datatable/datatable-extension/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/datatable/datatable-extension/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/datatable/datatable-extension/responsive.bootstrap4.min.js') }}"></script>
+
+    <script src="{{ asset('assets/backend/js/datatable/datatable-extension/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/datatable/datatable-extension/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/datatable/datatable-extension/dataTables.autoFill.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/datatable/datatable-extension/dataTables.select.min.js') }}"></script>
+
+    <script src="{{ asset('assets/backend/js/datatable/datatable-extension/dataTables.keyTable.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/datatable/datatable-extension/dataTables.colReorder.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/datatable/datatable-extension/dataTables.fixedHeader.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/datatable/datatable-extension/dataTables.rowReorder.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/datatable/datatable-extension/custom.js') }}"></script>
+
+
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="{{ asset('assets/backend/js/script.js') }}"></script>

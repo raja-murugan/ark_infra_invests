@@ -39,7 +39,7 @@
                     <div class="media profile-media"><img class="b-r-10"
                             src="{{ asset('assets/backend/images/dashboard/profile.png') }}" alt="">
                         <div class="media-body"><span>{{ auth()->user()->name }}</span>
-                            <p class="mb-0">Admin <i class="middle fa fa-angle-down"></i></p>
+                            <p class="mb-0">{{ auth()->user()->role }} <i class="middle fa fa-angle-down"></i></p>
                         </div>
                     </div>
                     <ul class="profile-dropdown onhover-show-div">

@@ -133,7 +133,7 @@
                     <div class="row">
 
                         <div class="col-md-6">
-                            <h4>Dashboard</h4>
+                            <h4>Customers</h4>
                         </div>
 
                        
@@ -145,7 +145,84 @@
                     <div class="card-body">
 
 
-                   
+                    <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded">
+                        <li class="nav-item"><a class="nav-link active" href="#solid-tab1" data-bs-toggle="tab">Active</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#solid-tab2" data-bs-toggle="tab">Inactive</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane show active" id="solid-tab1">
+
+                        <div class=" dt-ext table-responsive">
+                          <div id="multilevel-btn_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                            <table class="display dataTable " id="multilevel-btn" role="grid" aria-describedby="multilevel-btn_info">
+                              <thead>
+                                <tr >
+                                  <th>S.No</th>
+                                  <th>Customer</th>
+                                  <th>Phone Number</th>
+                                  <th>Address</th>
+                                  <th>Plan Name</th>
+                                  <th>Paid Installment <br/>Count</th>
+                                  <th>Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              @foreach ($Customer_data as $keydata => $Customer_datas)
+                              
+                              <tr>
+                                  <td>{{ ++$keydata }}</td>
+                                  <td style="font-weight: 600;">{{ $Customer_datas['name']  }}</td>
+                                  <td>{{ $Customer_datas['phone_number']  }}</td>
+                                  <td>{{ $Customer_datas['address']  }}</td>
+                                  <td style="text-transform:uppercase">{{ $Customer_datas['plan']  }}</td>
+                                  <td><span class="badge badge-danger" style="text-align:center;">{{$Customer_datas['total_installmentcount']}}</span></td>
+                                  <td> 
+                                    <ul class="action"> 
+                                      <li class="view"> <a href="{{ route('customer.view', ['unique_key' => $Customer_datas['unique_key']]) }}" class="btn badge badge-success">View</a></li>
+                                    </ul>
+                                  </td>
+                                </tr>
+                                @endforeach
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+
+                        </div>
+                        <div class="tab-pane" id="solid-tab2">
+
+
+                        <div class=" table-responsive">
+                            <table class="display "id="basic-1">
+                              <thead>
+                                <tr >
+                                  <th>S.No</th>
+                                  <th>Customer</th>
+                                  <th>E-Mail</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              @foreach ($inactiveCustomer_data as $keydata => $inactiveCustomer_datas)
+                              
+                              <tr>
+                                  <td>{{ ++$keydata }}</td>
+                                  <td>{{ $inactiveCustomer_datas['name']  }}</td>
+                                  <td>{{ $inactiveCustomer_datas['email']  }}</td>
+                                </tr>
+                                @endforeach
+                              </tbody>
+                            </table>
+                        </div>
+
+                        </div>
+                    </div>
+
+                    
+
+
+
+
                
 
                     </div>
@@ -169,31 +246,31 @@
                         </div>
                         
 
-                        @if(Auth::user()->role == 'Admin')
+                      
 
                            
                               <div class="col-md-6">
                                 <a class="btn btn-primary" href="{{ route('customer.edit', ['id' => Auth::user()->customer_id]) }}">Edit Profile</a>
                                 
                                 @if($pay_button_status == 'open')
-                                <form name="" action="{{url('/payment_request')}}" method="POST">
-                                @csrf
-                                  <input type="hidden" name="customer_id" id="customer_id" value="{{Auth::user()->customer_id}}">
-                                  <input type="hidden" name="planamount" id="planamount" value="{{$planamount}}">
-                                  <input type="hidden" name="customername" id="customername" value="{{Auth::user()->name}}">
-                                  <input type="hidden" name="customeremail" id="customeremail" value="{{Auth::user()->email}}">
-                                  <input type="hidden" name="customerphoneno" id="customerphoneno" value="{{$phoneno}}">
+                                    <form name="" action="{{url('/payment_request')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="customer_id" id="customer_id" value="{{Auth::user()->customer_id}}">
+                                    <input type="hidden" name="planamount" id="planamount" value="{{$planamount}}">
+                                    <input type="hidden" name="customername" id="customername" value="{{Auth::user()->name}}">
+                                    <input type="hidden" name="customeremail" id="customeremail" value="{{Auth::user()->email}}">
+                                    <input type="hidden" name="customerphoneno" id="customerphoneno" value="{{$phoneno}}">
 
-                                  
+                                    
 
-                                  <button type="submit" class="btn btn-success">Pay</button>
-                                </form>
+                                    <button type="submit" class="btn btn-success">Pay</button>
+                                    </form>
 
                                 @endif
                                 
                               </div>
                             
-                        @endif
+                       
 
                         
                     </div>
@@ -201,7 +278,7 @@
             </div>
 
 
-            @if(Auth::user()->role == 'Admin')
+          
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
@@ -253,10 +330,13 @@
                         </div>
                       </div>
 
-                        <br/><br/><br/>
+                        <br/>
                       <div class="row g-sm-4 g-3">
-                          <div class="table-responsive">
-                              <table class="table table-center table-hover datatable border table-striped">
+
+
+                      <div class=" dt-ext table-responsive">
+                          <div id="multilevel-btn_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                            <table class="display dataTable " id="export-button" role="grid" aria-describedby="export-button_info">
                                   <thead class="thead-light">
                                       <tr>
                                           <th>Installment</th>
@@ -277,33 +357,28 @@
                                           <td>{{date('d-m-Y', strtotime($Orderdatas->date))}}</td>
                                           <td>{{$Orderdatas->month}}</td>
                                           <td>{{$Orderdatas->amount}}</td>
-                                          <td><a class="btn btn-primary btn-xs" href="#">{{$Orderdatas->status}}</a></td>
+                                          <td><span class="badge badge-primary" style="text-transform:uppercase">{{$Orderdatas->status}}</span></td>
                                           <td><a href="{{ route('customer.recept_print', ['id' => $Orderdatas->id]) }}"
-                                                                          class="btn btn-square btn-sm" style="background: #d71e4a;color: white;" >Print</a></td>
+                                                                          class="badge badge-success">PRINT</a></td>
                                       </tr>
                                       @endif
                                       @endforeach
                                   </tbody>
                               </table>
                           </div>
+                        </div>
+
+
+
                       </div>
                     
                     </div>
                 </div>
             </div>
-            @endif
+          
 
 
-            @if(Auth::user()->role == 'Super-Admin')
-
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-body">
-
-                    </div>
-                </div>
-            </div>
-            @endif
+           
 
 
         </div>

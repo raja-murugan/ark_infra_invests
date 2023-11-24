@@ -73,7 +73,47 @@ class HomeController extends Controller
 
         }else if(Auth::user()->role == 'Super-Admin')
         {
-            return view('home');
+
+            $ActiveCustomer = Customer::where('soft_delete', '!=', 1)->orderBy('id', 'DESC')->get();
+            $Customer_data = [];
+            foreach ($ActiveCustomer as $key => $datas) {
+
+                $order_count = Order::where('customer_id', '=', $datas->id)->where('status', '=', 'Paid')->get();
+                $total_installmentcount = count(collect($order_count));
+
+                $Customer_data[] = array(
+                    'name' => $datas->name,
+                    'email' => $datas->email,
+                    'phone_number' => $datas->phone_number,
+                    'address' => $datas->address,
+                    'plan' => $datas->plan,
+                    'alternate_mobileno' => $datas->alternate_mobileno,
+                    'status' => $datas->status,
+                    'unique_key' => $datas->unique_key,
+                    'id' => $datas->id,
+                    'total_installmentcount' => $total_installmentcount,
+                );
+
+            }
+
+
+            $INActiveCustomer = User::where('customer_id', '=', NULL)->where('role', '=', NULL)->get();
+            $inactiveCustomer_data = [];
+            foreach ($INActiveCustomer as $key => $INActive_Customer) {
+
+                $inactiveCustomer_data[] = array(
+                    'name' => $INActive_Customer->name,
+                    'email' => $INActive_Customer->email
+                );
+
+            }
+
+
+
+
+
+            return view('pages.backend.dashboard', compact('Customer_data', 'inactiveCustomer_data'));
+            
         }else if(Auth::user()->role == ''){
             return view('home');
         }
