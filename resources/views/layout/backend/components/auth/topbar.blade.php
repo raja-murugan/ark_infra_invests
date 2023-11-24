@@ -16,8 +16,8 @@
         </form>
         <div class="header-logo-wrapper col-auto p-0">
             <div class="logo-wrapper"><a href="index.html"><img class="img-fluid for-light"
-                        src="{{ asset('assets/backend/images/logo/logo.png') }}" alt=""><img class="img-fluid for-dark"
-                        src="{{ asset('assets/backend/images/logo/logo_dark.png') }}" alt=""></a></div>
+                        src="{{ asset('assets/backend/images/logo/logo.png') }}" alt="" style="height: 50px; !important"><img class="img-fluid for-dark"
+                        src="{{ asset('assets/backend/images/logo/logo_dark.png') }}" alt="" style="height: 50px; !important"></a></div>
             <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle"
                     data-feather="align-center"></i></div>
         </div>

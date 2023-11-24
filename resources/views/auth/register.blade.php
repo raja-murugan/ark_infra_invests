@@ -7,11 +7,11 @@
                 <div class="login-card login-dark">
                     <div>
                         <div><a class="logo" href="#"><img class="img-fluid for-light"
-                                    src="{{ asset('assets/backend/images/logo/logo.png') }}" alt="looginpage"><img
+                                    src="{{ asset('assets/backend/images/logo/logo.png') }}" alt="looginpage" style="height: 80px;"><img
                                     class="img-fluid for-dark" src="{{ asset('assets/backend/images/logo/logo_dark.png') }}"
-                                    alt="looginpage"></a></div>
+                                    alt="looginpage" style="height: 80px;"></a></div>
                         <div class="login-main">
-                            <form class="theme-form" method="POST" action="{{ route('register') }}">
+                            <form class="theme-form" method="POST" action="{{ route('register') }}" autocomplete="off" autofill="off">
                                 @csrf
                                 <h4>Create your account</h4>
                                 <p>Enter your personal details to create account</p>

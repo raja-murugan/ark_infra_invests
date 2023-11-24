@@ -7,10 +7,10 @@
                 <div class="login-card login-dark">
                     <div>
                         <div><a class="logo" href="#"><img class="img-fluid for-light"
-                                    src="{{ asset('assets/backend/images/logo/logo.png') }}" alt="looginpage"><img class="img-fluid for-dark"
-                                    src="{{ asset('assets/backend/images/logo/logo_dark.png') }}" alt="looginpage"></a></div>
+                                    src="{{ asset('assets/backend/images/logo/logo.png') }}" alt="looginpage" style="height: 80px;"><img class="img-fluid for-dark"
+                                    src="{{ asset('assets/backend/images/logo/logo_dark.png') }}" alt="looginpage" style="height: 80px;"></a></div>
                         <div class="login-main">
-                                <form class="theme-form" method="POST" action="{{ route('login') }}">
+                                <form class="theme-form" method="POST" action="{{ route('login') }}" autocomplete="off" autofill="off">
                                     @csrf
                                 <h4>Sign in to account</h4>
                                 <p>Enter your email & password to login</p>
@@ -34,15 +34,15 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                        <div class="show-hide"><span class="show"> </span></div>
+                                        <div class="show-hide"></div>
                                     </div>
                                 </div>
                                 <div class="form-group mb-0">
-                                    <div class="checkbox p-0">
+                                    {{-- <div class="checkbox p-0">
                                         <input id="checkbox1" type="checkbox">
                                         <label class="text-muted" for="checkbox1">Remember password</label>
                                     </div>
-                                    <a class="link" href="forget-password.html">Forgot password?</a>
+                                    <a class="link" href="forget-password.html">Forgot password?</a> --}}
                                     <div class="text-end mt-3">
                                         <button class="btn btn-primary btn-block w-100" type="submit">Sign in</button>
                                     </div>

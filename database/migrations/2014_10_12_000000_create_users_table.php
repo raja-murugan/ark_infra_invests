@@ -22,7 +22,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('customer_id')->nullable();
             // $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->string('role')->default('admin');
+            $table->string('role')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
