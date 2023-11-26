@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
 
             $table->string('customer_name');
-            $table->string('installment');
+            $table->string('installment')->nullable();
             $table->string('razorpay_order_id');
             $table->string('razorpay_payment_id')->nullable();
             $table->string('razorpay_signature')->nullable();
