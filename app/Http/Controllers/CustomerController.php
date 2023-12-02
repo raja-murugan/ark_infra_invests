@@ -113,10 +113,8 @@ class CustomerController extends Controller
         }
     }
 
-
-
-   private $razorpayId = "rzp_test_Pkkbzx5Jv2PbXn";
-   private $razorpaykey = "hXmr6R0g461B3qMnn37kyDg7";
+//    private $razorpayId = "rzp_test_Pkkbzx5Jv2PbXn";
+//    private $razorpaykey = "hXmr6R0g461B3qMnn37kyDg7";
 
 
     public function payment_request(Request $request)
@@ -155,49 +153,50 @@ class CustomerController extends Controller
 
 
            // Generate Random Receipt ID
-           $receipt_id = Str::random(20);
+        //    $receipt_id = Str::random(20);
 
-           $razorpayId = config('services.razorpay.razorpay_key');
-           $razorpaykey = config('services.razorpay.razorpay_secret');
+        //    $razorpayId = config('services.razorpay.razorpay_key');
+        //    $razorpaykey = config('services.razorpay.razorpay_secret');
 
-           $api = new Api($razorpayId, $razorpaykey);
+        //    $api = new Api($razorpayId, $razorpaykey);
 
-           //  In Razorpay you have to convert rupees into paise we multiply by 100
-           // Currency will be INR
-           // Creating Order
+        //    //  In Razorpay you have to convert rupees into paise we multiply by 100
+        //    // Currency will be INR
+        //    // Creating Order
 
-           $order = $api->order->create(array(
-               'receipt'         => $receipt_id,
-               'amount'          => $planamount * 100, // 39900 rupees in paise
-               'currency'        => 'INR'
-           ));
+        //    $order = $api->order->create(array(
+        //        'receipt'         => $receipt_id,
+        //        'amount'          => $planamount * 100, // 39900 rupees in paise
+        //        'currency'        => 'INR'
+        //    ));
 
-           // Let's return the response
-           // Let's create the razorpay payment page
-
-
-           $response = [
-               'orderId' => $order['id'],
-               'razorpayId' => $razorpayId, // Enter the Key ID generated from the Dashboard
-               'amount' => $planamount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-               'name' => $data->name,
-               'currency' => 'INR',
-               'email' => $data->email,
-               'ContactNumber' => $data->phone_number,
-               "description" => "Test Transaction",
-           ];
+        //    // Let's return the response
+        //    // Let's create the razorpay payment page
 
 
+        //    $response = [
+        //        'orderId' => $order['id'],
+        //        'razorpayId' => $razorpayId, // Enter the Key ID generated from the Dashboard
+        //        'amount' => $planamount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        //        'name' => $data->name,
+        //        'currency' => 'INR',
+        //        'email' => $data->email,
+        //        'ContactNumber' => $data->phone_number,
+        //        "description" => "Test Transaction",
+        //    ];
 
-           Order::create([
-               'customer_id' => $data->id,
-               'customer_name' => $data->name,
-               'razorpay_order_id' => $order['id'],
-               'amount' => $planamount,
-           ]);
 
 
-           return view('pages.backend.customer.razorpay_paymentpage', compact('response'));
+        //    Order::create([
+        //        'customer_id' => $data->id,
+        //        'customer_name' => $data->name,
+        //        'razorpay_order_id' => $order['id'],
+        //        'amount' => $planamount,
+        //    ]);
+
+
+        //    return view('pages.backend.customer.razorpay_paymentpage', compact('response'));
+           return view('pages.backend.customer.bank');
 
         }else if(Auth::user()->role == 'Admin'){
 

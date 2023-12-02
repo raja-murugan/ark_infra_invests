@@ -7,16 +7,16 @@
                 <div class="card">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 style="color:#262932;text-transform: uppercase;">{{Auth::user()->name}}</h4>
+                            <h4 style="color:red;text-transform: uppercase;">{{Auth::user()->name}}</h4>
                         </div>
-                        
+
 
                         @if(Auth::user()->role == 'Admin')
 
-                           
+
                               <div class="col-md-6">
                                 <a class="btn btn-primary" href="{{ route('customer.edit', ['id' => Auth::user()->customer_id]) }}">Edit Profile</a>
-                                
+
                                 @if($pay_button_status == 'open')
                                 <form name="" action="{{url('/payment_request')}}" method="POST">
                                 @csrf
@@ -26,18 +26,18 @@
                                   <input type="hidden" name="customeremail" id="customeremail" value="{{Auth::user()->email}}">
                                   <input type="hidden" name="customerphoneno" id="customerphoneno" value="{{$phoneno}}">
 
-                                  
+
 
                                   <button type="submit" class="btn btn-success">Pay</button>
                                 </form>
 
                                 @endif
-                                
+
                               </div>
-                            
+
                         @endif
 
-                        
+
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
 
                       <div class="row g-sm-4 g-3">
                         <div class="col-xl-3 col-md-6">
-                          <div class="prooduct-details-box">                                 
+                          <div class="prooduct-details-box">
                             <div class="media">
                               <div class="media-body ms-3">
                                 <div class="avaiabilty">
@@ -61,7 +61,7 @@
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
-                          <div class="prooduct-details-box"> 
+                          <div class="prooduct-details-box">
                             <div class="media">
                               <div class="media-body ms-3">
                                 <div class="avaiabilty">
@@ -72,7 +72,7 @@
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
-                          <div class="prooduct-details-box"> 
+                          <div class="prooduct-details-box">
                             <div class="media">
                               <div class="media-body ms-3">
                                 <div class="avaiabilty">
@@ -83,7 +83,7 @@
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
-                          <div class="prooduct-details-box"> 
+                          <div class="prooduct-details-box">
                             <div class="media">
                               <div class="media-body ms-3">
                                 <div class="avaiabilty">
@@ -129,7 +129,7 @@
                               </table>
                           </div>
                       </div>
-                    
+
                     </div>
                 </div>
             </div>
