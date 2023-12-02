@@ -23,7 +23,7 @@
                             contact us at any time.
                         </p>
 
-                        <p> Account No : Ark Infra</p>
+                        <p> Account Name : Ark Infra</p>
                         <p> Account Number : 1624135000009172</p>
                         <P> IFSC Code : KVBL0001624</P>
                         <P> Branch : Karur Vysya Bank, Thiruverumbur</P>
