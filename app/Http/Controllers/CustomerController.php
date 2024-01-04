@@ -113,10 +113,6 @@ class CustomerController extends Controller
         }
     }
 
-//    private $razorpayId = "rzp_test_Pkkbzx5Jv2PbXn";
-//    private $razorpaykey = "hXmr6R0g461B3qMnn37kyDg7";
-
-
     public function payment_request(Request $request)
     {
         if(Auth::user()->role == '')
@@ -153,50 +149,50 @@ class CustomerController extends Controller
 
 
            // Generate Random Receipt ID
-        //    $receipt_id = Str::random(20);
+           $receipt_id = Str::random(20);
 
-        //    $razorpayId = config('services.razorpay.razorpay_key');
-        //    $razorpaykey = config('services.razorpay.razorpay_secret');
+           $razorpayId = config('services.razorpay.razorpay_key');
+           $razorpaykey = config('services.razorpay.razorpay_secret');
 
-        //    $api = new Api($razorpayId, $razorpaykey);
+           $api = new Api($razorpayId, $razorpaykey);
 
-        //    //  In Razorpay you have to convert rupees into paise we multiply by 100
-        //    // Currency will be INR
-        //    // Creating Order
+           //  In Razorpay you have to convert rupees into paise we multiply by 100
+           // Currency will be INR
+           // Creating Order
 
-        //    $order = $api->order->create(array(
-        //        'receipt'         => $receipt_id,
-        //        'amount'          => $planamount * 100, // 39900 rupees in paise
-        //        'currency'        => 'INR'
-        //    ));
+           $order = $api->order->create(array(
+               'receipt'         => $receipt_id,
+               'amount'          => $planamount * 100, // 39900 rupees in paise
+               'currency'        => 'INR'
+           ));
 
-        //    // Let's return the response
-        //    // Let's create the razorpay payment page
-
-
-        //    $response = [
-        //        'orderId' => $order['id'],
-        //        'razorpayId' => $razorpayId, // Enter the Key ID generated from the Dashboard
-        //        'amount' => $planamount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-        //        'name' => $data->name,
-        //        'currency' => 'INR',
-        //        'email' => $data->email,
-        //        'ContactNumber' => $data->phone_number,
-        //        "description" => "Test Transaction",
-        //    ];
+           // Let's return the response
+           // Let's create the razorpay payment page
 
 
+           $response = [
+               'orderId' => $order['id'],
+               'razorpayId' => $razorpayId, // Enter the Key ID generated from the Dashboard
+               'amount' => $planamount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+               'name' => $data->name,
+               'currency' => 'INR',
+               'email' => $data->email,
+               'ContactNumber' => $data->phone_number,
+               "description" => "Test Transaction",
+           ];
 
-        //    Order::create([
-        //        'customer_id' => $data->id,
-        //        'customer_name' => $data->name,
-        //        'razorpay_order_id' => $order['id'],
-        //        'amount' => $planamount,
-        //    ]);
 
 
-        //    return view('pages.backend.customer.razorpay_paymentpage', compact('response'));
-           return view('pages.backend.customer.bank');
+           Order::create([
+               'customer_id' => $data->id,
+               'customer_name' => $data->name,
+               'razorpay_order_id' => $order['id'],
+               'amount' => $planamount,
+           ]);
+
+
+           return view('pages.backend.customer.razorpay_paymentpage', compact('response'));
+        //    return view('pages.backend.customer.bank');
 
         }else if(Auth::user()->role == 'Admin'){
 
@@ -249,17 +245,14 @@ class CustomerController extends Controller
         }
     }
 
-
     public function paymentverify(Request $request)
     {
-
         $today = Carbon::now()->format('Y-m-d');
         $month = date("M",strtotime($today));
-
         $Latest_order = Order::where('customer_id', '=', Auth::user()->customer_id)->where('status', '=', 'Paid')->latest('id')->first();
         if($Latest_order != ''){
             $installment = $Latest_order->installment + 1;
-        }else {
+        }else{
             $installment = 1;
         }
 
@@ -273,7 +266,6 @@ class CustomerController extends Controller
             'razorpay_payment_id' => $request->input('razorpay_payment_id'),
             'razorpay_signature' => $request->input('razorpay_signature'),
         ];
-
         try {
             $api->utility->verifyPaymentSignature($attributes);
 
@@ -286,37 +278,19 @@ class CustomerController extends Controller
                 'installment' => $installment,
             ]);
 
-
             if($request->input('razorpay_payment_id') != ''){
 
                 $customer = Customer::findOrFail(Auth::user()->customer_id);
                 $pending_month = $customer->pending_month - 1;
                 $customer->pending_month = $pending_month;
                 $customer->update();
-
             }
-
-
-
-
             return redirect()->route('home')->with('message', 'Payment Successfull !');
 
         } catch(SignatureVerificationError $e){
-
             return redirect()->route('home')->with('message', 'Payment Failed !');
         }
-
-
-
-
-
-        //$razorpay_payment_id = $request->all()['razorpay_payment_id'];
-       // $razorpay_signature = $request->all()['razorpay_signature'];
-
-
     }
-
-
 
     public function edit($id)
     {
@@ -324,8 +298,6 @@ class CustomerController extends Controller
 
         return view('pages.backend.customer.edit', compact('CustomerData'));
     }
-
-
 
     public function update(Request $request, $id)
     {
@@ -344,8 +316,6 @@ class CustomerController extends Controller
         return redirect()->route('customer.index')->with('info', 'Updated !');
     }
 
-
-
     public function recept_print($id)
     {
         $OrderData = Order::findOrFail($id);
@@ -354,8 +324,6 @@ class CustomerController extends Controller
 
         return view('pages.backend.customer.recept_print', compact('OrderData', 'today'));
     }
-
-
 
     public function view($unique_key)
     {
