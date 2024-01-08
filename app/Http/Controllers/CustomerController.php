@@ -180,7 +180,7 @@ class CustomerController extends Controller
                'currency' => 'INR',
                'email' => $data->email,
                'ContactNumber' => $data->phone_number,
-               "description" => "Test Transaction",
+               "description" => "Invest - Payment",
            ];
 
 
@@ -229,7 +229,7 @@ class CustomerController extends Controller
                  'currency' => 'INR',
                  'email' => $request->all()['customeremail'],
                  'ContactNumber' => $request->all()['customerphoneno'],
-                 "description" => "Test Transaction",
+                 "description" => "Invest - Payment",
              ];
 
 
