@@ -2,8 +2,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="icon" href="{{ asset('assets/backend/images/favicon.png') }}" type="image/x-icon">
-<link rel="shortcut icon" href="{{ asset('assets/backend/images/favicon.png') }}" type="image/x-icon">
+<link rel="icon" href="{{ asset('assets/backend/images/favicon.jpg') }}" type="image/x-icon">
+<link rel="shortcut icon" href="{{ asset('assets/backend/images/favicon.jpg') }}" type="image/x-icon">
 <title>Ark Infra Invest (You Dream We Build) - Crafted By Zwork Technology</title>
 <!-- Google font-->
 <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap"

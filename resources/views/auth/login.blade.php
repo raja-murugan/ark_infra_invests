@@ -7,8 +7,8 @@
                 <div class="login-card login-dark">
                     <div>
                         <div><a class="logo" href="#"><img class="img-fluid for-light"
-                                    src="{{ asset('assets/backend/images/logo/logo.png') }}" alt="looginpage" style="height: 80px;"><img class="img-fluid for-dark"
-                                    src="{{ asset('assets/backend/images/logo/logo_dark.png') }}" alt="looginpage" style="height: 80px;"></a></div>
+                                    src="{{ asset('assets/backend/images/logo/logo.jpg') }}" alt="looginpage" style="height: 80px;"><img class="img-fluid for-dark"
+                                    src="{{ asset('assets/backend/images/logo/logo_dark.jpg') }}" alt="looginpage" style="height: 80px;"></a></div>
                         <div class="login-main">
                                 <form class="theme-form" method="POST" action="{{ route('login') }}" autocomplete="off" autofill="off">
                                     @csrf
