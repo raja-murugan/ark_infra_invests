@@ -83,6 +83,7 @@ class CustomerController extends Controller
                     'address' => $datas->address,
                     'plan' => $datas->plan,
                     'alternate_mobileno' => $datas->alternate_mobileno,
+                    'referred_by' => $datas->referred_by,
                     'status' => $datas->status,
                     'unique_key' => $datas->unique_key,
                     'id' => $datas->id,
@@ -128,6 +129,7 @@ class CustomerController extends Controller
             $data->address = $request->get('address');
             $data->plan = $request->get('plan');
             $data->alternate_mobileno = $request->get('alternate_mobileno');
+            $data->referred_by = $request->get('referred_by');
             $data->userid = $request->get('userid');
             $data->status = 1;
             $data->total_month = 12;

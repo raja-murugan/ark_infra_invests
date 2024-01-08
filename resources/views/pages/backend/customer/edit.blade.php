@@ -6,7 +6,7 @@
             <div class="col-md-12 project-list" style="margin-top: 30px;">
                 <div class="card">
                     <div class="row">
-                     
+
                         <div class="col-md-6">
                             <h4>Update Profile</h4>
                         </div>
@@ -48,7 +48,7 @@
                               <div class="valid-feedback">Looks good!</div>
                            </div>
                            <div class="col-xl-6 col-sm-6">
-                              <label class="form-label" for="">Alternate Mobile Number<span class="txt-danger">*</span></label>
+                              <label class="form-label" for="">Alternate Mobile Number </label>
                               <input class="form-control" id="alternate_mobileno"  name="alternate_mobileno" type="text" placeholder="Alternate contact number" value="{{$CustomerData->alternate_mobileno}}">
                               <div class="valid-feedback">Looks good!</div>
                            </div>
@@ -61,12 +61,12 @@
                               <textarea name="address" id="address" class="form-control" required="">{{$CustomerData->address}}</textarea>
                               <div class="valid-feedback">Looks good!</div>
                            </div>
-                           
+
                         </div>
 
 
 
-                        
+
 
                     <div class="col-md-12">
                         <button class="btn btn-primary" type="submit">Update</button>

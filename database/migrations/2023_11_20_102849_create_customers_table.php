@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('plan');
             $table->string('alternate_mobileno')->nullable();
+            $table->string('referred_by')->nullable();
             $table->boolean('status')->default(0);
             $table->unsignedBigInteger('userid');
             $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');

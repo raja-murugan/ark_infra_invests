@@ -61,14 +61,14 @@ class HomeController extends Controller
                 }else {
                     $pay_button_status = 'open';
                 }
-                
+
             }else{
                 $pay_button_status = 'closed';
             }
 
 
             $Orderdata = Order::where('customer_id', '=', Auth::user()->customer_id)->orderBy('id', 'DESC')->get();
-            
+
             return view('pages.backend.dashboard', compact('customer', 'today', 'planamount', 'plan', 'total_month', 'status', 'phoneno', 'Orderdata', 'pay_button_status'));
 
         }else if(Auth::user()->role == 'Super-Admin')
@@ -88,6 +88,7 @@ class HomeController extends Controller
                     'address' => $datas->address,
                     'plan' => $datas->plan,
                     'alternate_mobileno' => $datas->alternate_mobileno,
+                    'referred_by' => $datas->referred_by,
                     'status' => $datas->status,
                     'unique_key' => $datas->unique_key,
                     'id' => $datas->id,
@@ -113,10 +114,10 @@ class HomeController extends Controller
 
 
             return view('pages.backend.dashboard', compact('Customer_data', 'inactiveCustomer_data'));
-            
+
         }else if(Auth::user()->role == ''){
             return view('home');
         }
-       
+
     }
 }

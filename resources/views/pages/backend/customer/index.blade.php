@@ -54,7 +54,7 @@
                             <div class="media">
                               <div class="media-body ms-3">
                                 <div class="avaiabilty">
-                                  <div class=""><span>PLAN  </span> <button class="btn " style="text-transform: uppercase;background: #d71e4a;color: white;">{{$plan}}</button></div>
+                                  <div class=""><span>SELECTED PLAN  </span> <button class="btn " style="text-transform: uppercase;background: #d71e4a;color: white;">{{$plan}}</button></div>
                                 </div>
                               </div>
                             </div>
@@ -101,13 +101,13 @@
                               <table class="table table-center table-hover datatable border table-striped">
                                   <thead class="thead-light">
                                       <tr>
-                                          <th>Installment</th>
+                                          <th>Installment No</th>
+                                          <th>Month For</th>
                                           <th>Order ID</th>
-                                          <th>Date</th>
-                                          <th>Month</th>
+                                          <th>Payment Date</th>
                                           <th>Amount</th>
                                           <th>Status</th>
-                                          <th>Receipt</th>
+                                          <th>Action</th>
                                       </tr>
                                   </thead>
                                   <tbody>
@@ -115,9 +115,9 @@
                                     @if($Orderdatas->status == 'Paid')
                                       <tr>
                                           <td>{{$Orderdatas->installment }}</td>
+                                          <td>{{$Orderdatas->month}}</td>
                                           <td>{{$Orderdatas->razorpay_order_id }}</td>
                                           <td>{{date('d-m-Y', strtotime($Orderdatas->date))}}</td>
-                                          <td>{{$Orderdatas->month}}</td>
                                           <td>{{$Orderdatas->amount}}</td>
                                           <td><a class="btn btn-primary btn-xs" href="#">{{$Orderdatas->status}}</a></td>
                                           <td><a href="{{ route('customer.recept_print', ['id' => $Orderdatas->id]) }}"
