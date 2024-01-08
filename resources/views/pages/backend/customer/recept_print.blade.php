@@ -7,20 +7,20 @@
 <div class="container-fluid">
         <div class="row">
 
-            
-            
-          
-      
-        
+
+
+
+
+
         <button onclick="printDiv('receiptprint')"  class="btn btn-secondary" style="width:11%;">
                                        <i class="fa fa-print"></i> Print
                                     </button>
          <div class="row gutters" >
-               
+
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" id="receiptprint">
                <div class="card" >
                   <div class="card-body p-0">
-                           
+
                      <div class="invoice-container" >
 
                         <style>
@@ -155,18 +155,18 @@
 
                                  .custom-actions-btns .btn {
                                     margin: .3rem 0 .3rem .3rem;
-                                 }    
-                                 </style>                        
+                                 }
+                                 </style>
 
                         <div class="invoice-header">
                            <!-- Row start -->
-                           
+
                            <!-- Row end -->
                            <!-- Row start -->
                            <div class="row gutters">
                               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                  <a href="index.html" class="invoice-logo">
-                                    <span>ARC INVEST </span> - Diwali Savings Fund Scheme
+                                    <span>ARK INVEST </span> - Diwali Savings Fund Scheme
                                  </a>
                               </div>
                            </div>
@@ -176,7 +176,7 @@
                               <div class="col-xl-7 col-lg-7 col-md-7  ">
                                  <div class="invoice-details">
                                     <div class="invoice-num">
-                                    <span style="color:black;font-weight:700">Arc Infra Invest</span><br>
+                                    <span style="color:black;font-weight:700">Ark Infra Invest</span><br>
                                        <i class="fa fa-phone"></i>9092759389
                                     </div>
                                  </div>
@@ -187,7 +187,7 @@
                                        <div>Bill No : {{$OrderData->razorpay_order_id}}</div>
                                        <div>Date : {{date('d-m-Y', strtotime($OrderData->date))}}</div>
                                     </div>
-                                 </div>													
+                                 </div>
                               </div>
                            </div>
                            <!-- Row end -->
@@ -229,12 +229,12 @@
                   </div>
                </div>
             </div>
-	      </div>              
+	      </div>
 
 
 
-         
-        
+
+
         </div>
 </div>
 
